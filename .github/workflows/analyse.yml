@@ -29,8 +29,11 @@ jobs:
            wget https://github.com/HoerTech-gGmbH/openMHA/releases/download/v4.17.0/openMHA-4.17.0.pkg
            sudo installer -pkg $PWD/openMHA-4.17.0.pkg -target /
            bash print_dylibs_info.sh /opt/local/lib/libjack.0.dylib /usr/lib/libjack.0.dylib /usr/local/lib/openmha/MHAIOJackdb.dylib
+           mha iolib=MHAIOJackdb cmd=quit
     - name: Add libjack symlink and repeat
+      if: always()
       run: |
            sudo mkdir -p /opt/local/lib
            sudo ln -s /usr/local/lib/libjack.0.dylib /opt/local/lib/
            bash print_dylibs_info.sh /opt/local/lib/libjack.0.dylib /usr/lib/libjack.0.dylib /usr/local/lib/openmha/MHAIOJackdb.dylib
+           mha iolib=MHAIOJackdb cmd=quit
