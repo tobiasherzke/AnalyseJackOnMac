@@ -19,6 +19,11 @@ jobs:
            tar xf jack2-macOS-intel-v1.9.20.tar.gz
            sudo installer -pkg $PWD/jack2-osx-1.9.20.pkg -target /
            bash print_dylibs_info.sh /opt/local/lib/libjack.0.dylib /usr/lib/libjack.0.dylib /usr/local/lib/openmha/MHAIOJackdb.dylib
+           ls -l /usr/local/lib/libjack.0.1.0.dylib || true
+           echo /usr/local/lib/*jack*
+           echo /usr/lib/*jack*
+           echo /opt/lib/*jack*
+           echo /opt/local/lib/*jack*
     - name: install also openMHA and repeat analysis
       run: |
            wget https://github.com/HoerTech-gGmbH/openMHA/releases/download/v4.17.0/openMHA-4.17.0.pkg
