@@ -1,0 +1,26 @@
+name: Analyse Jack on Mac
+
+on:
+  push:
+    branches: ['*']
+
+jobs:
+  build:
+    name: job
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v2
+    - name: perform initial analysis before installing anything
+      run: |
+           bash print_dylibs_info.sh /opt/local/lib/libjack.0.dylib /usr/lib/libjack.0.dylib /usr/local/lib/openmha/MHAIOJackdb.dylib
+    - name: install jack and repeat analysis
+      run: |
+           wget https://github.com/jackaudio/jack2-releases/releases/download/v1.9.20/jack2-macOS-intel-v1.9.20.tar.gz
+           tar xf jack2-macOS-intel-v1.9.20.tar.gz
+           sudo installer -pkg $PWD/jack2-osx-1.9.20.pkg -target /
+           bash print_dylibs_info.sh /opt/local/lib/libjack.0.dylib /usr/lib/libjack.0.dylib /usr/local/lib/openmha/MHAIOJackdb.dylib
+    - name: install also openMHA and repeat analysis
+      run: |
+           wget https://github.com/HoerTech-gGmbH/openMHA/releases/download/v4.17.0/openMHA-4.17.0.pkg
+           sudo installer -pkg $PWD/openMHA-4.17.0.pkg -target /
+           bash print_dylibs_info.sh /opt/local/lib/libjack.0.dylib /usr/lib/libjack.0.dylib /usr/local/lib/openmha/MHAIOJackdb.dylib
